@@ -1,0 +1,372 @@
+Bisection::
+
+#include<iostream>
+#include<cmath>
+#include<iomanip>
+using namespace std;
+double func(double x)
+{
+    double val;
+    val = pow(x, 3) - x - 1;
+    return val;
+}
+int main()
+{
+
+    double a,b,c;
+    cout<<"Enter two number"<<endl;
+    cin>>a>>b;
+    int n=0;
+    if(a<b)
+    {
+        double fa,fb;
+        fa=func(a);
+        fb=func(b);
+
+        if(fa*fb<0)
+        {
+            cout<<"n"<<setw(20)<<"a"<<setw(20)<<"f(a)"<<setw(20)<<"b"<<setw(20)<<"f(b)"<<setw(15)<<"c"<<setw(15)<<"f(c)"<<endl;
+
+
+            while(1)
+            {
+
+                 cout<<++n<<setw(20)<<a<<setw(20)<<func(a)<<setw(20)<<b<<setw(20)<<func(b);
+
+                c=(a+b)/2;
+
+                cout<<setw(15)<<c<<setw(15)<<func(c);
+                if(func(c)==0)
+                {
+                    cout<<"The root is ="<<c<<endl;
+                    break;
+                }
+                else if(func(a)*func(c)<0)
+                {
+                    b=c;
+
+                }
+                else if(func(c)*func(b)<0)
+                {
+                    a=c;
+                }
+                if(abs(func(c))<=0.00005)
+                    break;
+
+
+                cout<<endl;
+
+            }
+            cout<<endl;
+             cout<<"root "<<c<<endl;
+
+
+        }
+        else
+            cout<<"Invalid number"<<endl;
+    }
+
+    else
+        cout<<"Invalid number"<<endl;
+
+    return 0;
+}
+
+
+false method::
+
+#include<iostream>
+#include<cmath>
+#include<iomanip>
+using namespace std;
+double func(double x)
+{
+    double val;
+    val=pow(x,3)-x-1;
+    return val;
+}
+int main()
+{
+
+    double a,b,c;
+    cout<<"Enter two number"<<endl;
+    cin>>a>>b;
+    int n=0;
+    if(a<b)
+    {
+        double fa,fb;
+        fa=func(a);
+        fb=func(b);
+
+        if(fa*fb<0)
+        {
+            cout<<"n"<<setw(20)<<"a"<<setw(20)<<"f(a)"<<setw(20)<<"b"<<setw(20)<<"f(b)"<<setw(15)<<"c"<<setw(15)<<"f(c)"<<endl;
+
+
+            while(1)
+            {
+
+                 cout<<++n<<setw(20)<<a<<setw(20)<<func(a)<<setw(20)<<b<<setw(20)<<func(b);
+
+                c= a-fa*(b-a)/(fb - fa);
+
+                cout<<setw(15)<<c<<setw(15)<<func(c);
+                if(func(c)==0)
+                {
+                    cout<<"The root is ="<<c<<endl;
+                    break;
+                }
+                else if(func(a)*func(c)<0)
+                {
+                    b=c;
+
+                }
+                else if(func(c)*func(b)<0)
+                {
+                    a=c;
+                }
+                if(abs(func(c))<=0.00005)
+                    break;
+
+
+                cout<<endl;
+
+            }
+            cout<<endl;
+             cout<<"root "<<c<<endl;
+
+
+        }
+        else
+            cout<<"Invalid number"<<endl;
+    }
+
+    else
+        cout<<"Invalid number"<<endl;
+
+    return 0;
+}
+
+
+newton rapson::
+#include<iostream>
+#include<cmath>
+#include<iomanip>
+using namespace std;
+
+// Function for which we are finding the root
+double func(double x) {
+    return pow(x, 3) - x - 1;
+}
+
+// Derivative of the function
+double derivFunc(double x) {
+    return 3 * pow(x, 2) - 1;
+}
+
+int main() {
+    double a, b, x0, x1;
+    cout << "Enter two numbers a and b such that a < b and f(a)⋅f(b)<0:" << endl;
+    cin >> a >> b;
+
+    if(a >= b || func(a) * func(b) >= 0) {
+        cout << "Invalid interval. Ensure that a < b and f(a)⋅f(b) < 0." << endl;
+        return 1;
+    }
+
+    // Step 2: Initial guess
+    x0 = (a + b) / 2;
+
+    int n = 0;
+    cout << "n" << setw(20) << "x0" << setw(20) << "f(x0)" << setw(20) << "f'(x0)" << setw(20) << "x1" << setw(20) << "f(x1)" << endl;
+
+    while(1) {
+        double fx0 = func(x0);
+        double dfx0 = derivFunc(x0);
+
+        // Step 3: Calculate next approximation
+        x1 = x0 - fx0 / dfx0;
+
+        cout << ++n << setw(20) << x0 << setw(20) << fx0 << setw(20) << dfx0 << setw(20) << x1 << setw(20) << func(x1) << endl;
+
+        // Step 4: Check for convergence
+        if(abs(func(x1)) <= 0.00005 || func(x1) == 0) {
+            break;
+        }
+
+        // Step 4 (continued): Update x0
+        x0 = x1;
+    }
+
+    // Final result
+    cout << "Root: " << x1 << endl;
+
+    return 0;
+}
+
+secant method:
+
+#include<iostream>
+#include<cmath>
+#include<iomanip>
+using namespace std;
+
+// Function for which we are finding the root
+double func(double x) {
+    return pow(x, 3) - x - 1;
+}
+
+int main() {
+    double x0, x1, x2;
+    cout << "Enter two numbers x0 and x1 such that x0 < x1 and f(x0)⋅f(x1)<0:" << endl;
+    cin >> x0 >> x1;
+
+    if (x0 >= x1 || func(x0) * func(x1) >= 0) {
+        cout << "Invalid interval. Ensure that x0 < x1 and f(x0)⋅f(x1) < 0." << endl;
+        return 1;
+    }
+
+    int n = 0;
+    cout << "n" << setw(20) << "x0" << setw(20) << "f(x0)" << setw(20) << "x1" << setw(20) << "f(x1)" << setw(20) << "x2" << setw(20) << "f(x2)" << endl;
+
+    while (true) {
+        double fx0 = func(x0);
+        double fx1 = func(x1);
+
+        // Step 2: Calculate next approximation
+        x2 = x1 - fx1 * (x1 - x0) / (fx1 - fx0);
+
+        cout << ++n << setw(20) << x0 << setw(20) << fx0 << setw(20) << x1 << setw(20) << fx1 << setw(20) << x2 << setw(20) << func(x2) << endl;
+
+        // Step 3: Check for convergence
+        if (abs(func(x2)) <= 0.00005 || func(x2) == 0) {
+            break;
+        }
+
+        // Update for the next iteration
+        x0 = x1;
+        x1 = x2;
+    }
+
+    // Final result
+    cout << "Root: " << x2 << endl;
+
+    return 0;
+}
+
+
+Halley method::
+
+
+#include<iostream>
+#include<cmath>
+#include<iomanip>
+using namespace std;
+
+// Function for which we are finding the root
+double func(double x) {
+    return pow(x, 3) - x - 1;  // Example function
+}
+
+// First derivative of the function
+double derivFunc(double x) {
+    return 3 * pow(x, 2) - 1;
+}
+
+// Second derivative of the function
+double secondDerivFunc(double x) {
+    return 6 * x;
+}
+
+int main() {
+    double a, b, x0, x1;
+    cout << "Enter two numbers a and b such that a < b and f(a)⋅f(b)<0:" << endl;
+    cin >> a >> b;
+
+    if (a >= b || func(a) * func(b) >= 0) {
+        cout << "Invalid interval. Ensure that a < b and f(a)⋅f(b) < 0." << endl;
+        return 1;
+    }
+
+    // Step 2: Initial guess
+    x0 = (a + b) / 2;
+
+    int n = 0;
+    cout << "n" << setw(20) << "x0" << setw(20) << "f(x0)" << setw(20) << "f'(x0)" << setw(20) << "f''(x0)" << setw(20) << "x1" << setw(20) << "f(x1)" << endl;
+
+    while (true) {
+        double fx0 = func(x0);
+        double dfx0 = derivFunc(x0);
+        double d2fx0 = secondDerivFunc(x0);
+
+        // Step 3: Calculate next approximation
+        x1 = x0 - (2 * fx0) / (2 * dfx0 * dfx0 - fx0 * d2fx0);
+
+        cout << ++n << setw(20) << x0 << setw(20) << fx0 << setw(20) << dfx0 << setw(20) << d2fx0 << setw(20) << x1 << setw(20) << func(x1) << endl;
+
+        // Step 4: Check for convergence
+        if (abs(func(x1)) <= 0.00005 || func(x1) == 0) {
+            break;
+        }
+
+        // Update for the next iteration
+        x0 = x1;
+    }
+
+    // Final result
+    cout << "Root: " << x1 << endl;
+
+    return 0;
+}
+
+
+
+
+largranges interpolation:
+
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// Function to perform Lagrange Interpolation
+double lagrangeInterpolation(const vector<double>& x, const vector<double>& y, double target) {
+    double result = 0.0;
+    int n = x.size();
+
+    for (int i = 0; i < n; i++) {
+        double term = y[i];
+        
+        for (int j = 0; j < n; j++) {
+            if (j != i) {
+                term *= (target - x[j]) / (x[i] - x[j]);
+            }
+        }
+        
+        result += term;
+    }
+
+    return result;
+}
+
+int main() {
+    int n;
+    cout << "Enter the number of data points: ";
+    cin >> n;
+
+    vector<double> x(n), y(n);
+    cout << "Enter the data points (x y):" << endl;
+    for (int i = 0; i < n; i++) {
+        cin >> x[i] >> y[i];
+    }
+
+    double target;
+    cout << "Enter the value of x for interpolation: ";
+    cin >> target;
+
+    double result = lagrangeInterpolation(x, y, target);
+    cout << "The interpolated value at x = " << target << " is " << result << endl;
+
+    return 0;
+}
+
